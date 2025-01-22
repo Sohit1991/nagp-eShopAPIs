@@ -1,0 +1,36 @@
+#this one is working  --start
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-secret-stg
+  namespace: cert-manager
+spec:
+  dnsNames:
+    - mcartapis.eastus.cloudapp.azure.com
+  secretName: tls-secret-stg
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+#this one is working  --end
+
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: tls-secret-stg
+#   namespace: default
+# spec:
+#   secretName: tls-secret-stg
+#   dnsNames:
+#     - mcartapis.eastus.cloudapp.azure.com
+#   issuerRef:
+#     name: letsencrypt-staging
+#     kind: ClusterIssuer
+#   commonName: mcartapis.eastus.cloudapp.azure.com
+#   acme:
+#     config:
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#           - mcartapis.eastus.cloudapp.azure.com
+# ---
+

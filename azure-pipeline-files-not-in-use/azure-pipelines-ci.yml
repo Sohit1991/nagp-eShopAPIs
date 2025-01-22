@@ -1,0 +1,32 @@
+trigger:
+- master
+
+pool:
+  name: Default
+  demands:
+  - agent.name -equals DELL_L5490
+
+steps:
+- task: Docker@2
+  displayName: buildAndPushAuthAPI
+  inputs:
+    containerRegistry: 'crnagp'
+    repository: 'nagp-auth-api-repo'
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    tags: |
+     $(Build.BuildId)
+     latest
+    command: 'buildAndPush'
+    Dockerfile: 'Auth/Dockerfile'
+
+- task: Docker@2
+  displayName: buildAndPushProductsAPI
+  inputs:
+    containerRegistry: 'crnagp'
+    repository: 'nagp-products-api-repo'
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    tags: |
+     $(Build.BuildId)
+     latest
+    command: 'buildAndPush'
+    Dockerfile: 'Products/Dockerfile'

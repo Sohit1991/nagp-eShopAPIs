@@ -1,0 +1,63 @@
+# Deploy to Azure Kubernetes Service
+# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+pool:
+  name: Default
+  demands:
+  - agent.name -equals DELL_L5490
+
+steps:
+- task: Docker@2
+  displayName: buildAndPushAuthAPI
+  inputs:
+    containerRegistry: 'crnagp'
+    repository: 'nagp-auth-api-repo'
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    tags: |
+     $(Build.BuildId)
+     latest
+    command: 'buildAndPush'
+    Dockerfile: 'Auth/Dockerfile'
+
+- task: Docker@2
+  displayName: buildAndPushProductsAPI
+  inputs:
+    containerRegistry: 'crnagp'
+    repository: 'nagp-products-api-repo'
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    tags: |
+     $(Build.BuildId)
+     latest
+    command: 'buildAndPush'
+    Dockerfile: 'Products/Dockerfile'
+
+- task: KubernetesManifest@0
+  displayName: Create imagePullSecret
+  inputs:
+    action: createSecret
+    secretName: acr-secret
+    dockerRegistryEndpoint: da709a97-5e40-45fe-9929-b2cd834d5ad4
+    kubernetesServiceConnection: 'aks-cluster-default'
+
+- task: KubernetesManifest@0
+  displayName: DeployAuthService
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: 'aks-cluster-default'  # Replace with your AKS connection service connection name
+    manifests: 'k8s/api1-deployment.yaml'
+    containers: 'api1-container'
+    imagePullSecrets: 'acr-secret'
+
+- task: KubernetesManifest@0
+  displayName: DeployProductService
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: 'aks-cluster-default'  # Replace with your AKS connection service connection name
+    manifests: 'k8s/api2-deployment.yaml'
+    containers: 'api2-container'
+    imagePullSecrets: 'acr-secret'
+
