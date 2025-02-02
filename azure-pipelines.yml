@@ -5,6 +5,7 @@
 trigger:
 - master
 - main
+- azure-pipelines
 resources:
 - repo: self
 
