@@ -17,4 +17,4 @@ spec:
         - name: amcartproductapi 
           image: amcartapireg.azurecr.io/amcartproductapi
           ports:
-          - containerPort: 80
+          - containerPort: 8080
