@@ -41,8 +41,8 @@ stages:
         tags: |
           $(tag)
 
-    - publish: k8s
-      artifact: k8s
+    - publish: manifests
+      artifact: manifests
 
 - stage: Deploy
   displayName: Deploy stage
@@ -64,8 +64,8 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/k8s/deployments/product-api-deployment.yml
-               # $(Pipeline.Workspace)/k8s/service.yml
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
