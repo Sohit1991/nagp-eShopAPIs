@@ -15,7 +15,7 @@ variables:
   imageRepository: 'amcartproductapi'
   containerRegistry: 'amcartapireg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
-  dockerfilePath: '.\Products\Dockerfile'
+  dockerfilePath: './Products/Dockerfile'
   tag: '$(Build.BuildId)'
 #  imagePullSecret: 'amcartapireg47827950-auth'
 
