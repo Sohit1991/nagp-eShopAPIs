@@ -16,7 +16,8 @@ variables:
   imageRepository: 'amcartproductapi'
   containerRegistry: 'amcartapireg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
-  dockerfilePath: 'Products/Dockerfile'
+  productDockerFilePath: 'Products/Dockerfile'
+  authDockerFilePath: 'Auth/Dockerfile'
   tag: '$(Build.BuildId)'
 #  imagePullSecret: 'amcartapireg47827950-auth'
 
@@ -34,12 +35,22 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build and push Auth API image to container registry
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
         buildContext: '$(System.DefaultWorkingDirectory)'
-        dockerfile: $(dockerfilePath)
+        dockerfile: $(authDockerFilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Build and push Product API image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        buildContext: '$(System.DefaultWorkingDirectory)'
+        dockerfile: $(productDockerFilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
