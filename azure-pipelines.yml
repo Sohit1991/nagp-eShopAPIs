@@ -13,7 +13,8 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'fdf0fcd4-5aaf-4094-b504-c0534ad55e0d'
-  imageRepository: 'amcartproductapi'
+  productimageRepository: 'amcartproductapi'
+  authimageRepository: 'amcartauthapi'
   containerRegistry: 'amcartapireg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
   productDockerFilePath: 'Products/Dockerfile'
@@ -38,7 +39,7 @@ stages:
       displayName: Build and push Auth API image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(authimageRepository)
         buildContext: '$(System.DefaultWorkingDirectory)'
         dockerfile: $(authDockerFilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
@@ -48,7 +49,7 @@ stages:
       displayName: Build and push Product API image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(productimageRepository)
         buildContext: '$(System.DefaultWorkingDirectory)'
         dockerfile: $(productDockerFilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
@@ -74,14 +75,24 @@ stages:
           steps:
 
           - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
+            displayName: Deploy Auth to Kubernetes cluster
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                $(Pipeline.Workspace)/manifests/deployment/api-auth-deployment.yml
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+                $(containerRegistry)/$(authimageRepository):$(tag)
+          - task: KubernetesManifest@0
+            displayName: Deploy Product API to Kubernetes Cluster
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment/api-product-deployment.yml
+              # imagePullSecrets: |
+              #   $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(productimageRepository):$(tag)
+            
 
