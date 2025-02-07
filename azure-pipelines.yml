@@ -49,7 +49,7 @@ stages:
       displayName: Build and push Product API image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(productimageRepository)
         buildContext: '$(System.DefaultWorkingDirectory)'
         dockerfile: $(productDockerFilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
