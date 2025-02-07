@@ -83,7 +83,7 @@ stages:
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+                $(containerRegistry)/$(authimageRepository):$(tag)
           - task: KubernetesManifest@0
             displayName: Deploy Product API to Kubernetes Cluster
             inputs:
@@ -93,6 +93,6 @@ stages:
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+                $(containerRegistry)/$(productimageRepository):$(tag)
             
 
