@@ -13,7 +13,8 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'fdf0fcd4-5aaf-4094-b504-c0534ad55e0d'
-  imageRepository: 'amcartproductapi'
+  productimageRepository: 'amcartproductapi'
+  authimageRepository: 'amcartauthapi'
   containerRegistry: 'amcartapireg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
   productDockerFilePath: 'Products/Dockerfile'
@@ -38,7 +39,7 @@ stages:
       displayName: Build and push Auth API image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(authimageRepository)
         buildContext: '$(System.DefaultWorkingDirectory)'
         dockerfile: $(authDockerFilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
