@@ -15,49 +15,49 @@ namespace Auth
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-            builder.Services.AddDbContext<AuthDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            //builder.Services.AddDbContext<AuthDbContext>(options =>
+            //{
+            //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            //});
 
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-            }).AddEntityFrameworkStores<AuthDbContext>();
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            //{
+            //    options.SignIn.RequireConfirmedEmail = false;
+            //}).AddEntityFrameworkStores<AuthDbContext>();
 
-            builder.Services.AddAuthentication(option =>
-            {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(jwt =>
-            {
-                var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value);
-                jwt.SaveToken = true;
-                jwt.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    RequireExpirationTime = true, // Set to true to enforce expiration time validation
-                    ValidateLifetime = true,      // Set to true to validate token lifetime
-                    ClockSkew = TimeSpan.FromMinutes(15),
-                    ValidIssuers=new List<string>
-                    {
-                        "https://mcartapp.azurewebsites.net",
-                        "http://localhost:4200/home"
-                    }
+            //builder.Services.AddAuthentication(option =>
+            //{
+            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(jwt =>
+            //{
+            //    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value);
+            //    jwt.SaveToken = true;
+            //    jwt.TokenValidationParameters = new TokenValidationParameters()
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //        RequireExpirationTime = true, // Set to true to enforce expiration time validation
+            //        ValidateLifetime = true,      // Set to true to validate token lifetime
+            //        ClockSkew = TimeSpan.FromMinutes(15),
+            //        ValidIssuers=new List<string>
+            //        {
+            //            "https://mcartapp.azurewebsites.net",
+            //            "http://localhost:4200/home"
+            //        }
 
-                };
-            });
-            ;
+            //    };
+            //});
+            
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -72,11 +72,11 @@ namespace Auth
             var app = builder.Build();
 
             // Ensure the database is created
-            using (var scope = app.Services.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-                dbContext.Database.EnsureCreated();
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+            //    dbContext.Database.EnsureCreated();
+            //}
 
             // Configure the HTTP request pipeline.
             //if (app.Environment.IsDevelopment())
