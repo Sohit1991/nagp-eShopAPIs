@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "4.188.7.49.nip.io" #amcart-api.centralindia.cloudapp.azure.com
+    - host: api.sohit.com #amcart-api.centralindia.cloudapp.azure.com
       http:
         paths:
           - path: /auth
