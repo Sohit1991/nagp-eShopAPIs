@@ -79,7 +79,7 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment/api-auth-deployment.yml
+                $(Pipeline.Workspace)/manifests/deploymentIngress/api-auth-deployment.yml
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
@@ -89,10 +89,19 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment/api-product-deployment.yml
+                $(Pipeline.Workspace)/manifests/deploymentIngress/api-product-deployment.yml
               # imagePullSecrets: |
               #   $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(productimageRepository):$(tag)
-            
+          
+          - task: KubernetesManifest@0
+            displayName: Deploy Ingress Resources
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deploymentIngress/ingress.yml
+              
+           
+          
 
