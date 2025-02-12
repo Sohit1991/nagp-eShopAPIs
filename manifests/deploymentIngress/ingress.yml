@@ -4,7 +4,9 @@ metadata:
   name: my-ingress
   namespace: ingress-basic
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
     nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -22,6 +24,13 @@ spec:
                 port:
                   number: 80
           - path: /products1/test
+            pathType: Prefix
+            backend:
+              service:
+                name: amcartproductapi-service
+                port:
+                  number: 80
+          - path: /
             pathType: Prefix
             backend:
               service:
