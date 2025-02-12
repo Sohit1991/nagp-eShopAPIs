@@ -145,6 +145,13 @@ public class Products1Controller : ControllerBase
         return Ok();
     }
 
+    [HttpGet]
+    [Route("/products1/test")]
+    public IActionResult Test()
+    {
+        return Ok("Success");
+    }
+
 
     // GET: api/Products
     [HttpGet]
