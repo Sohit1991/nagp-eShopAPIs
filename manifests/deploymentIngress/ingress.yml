@@ -5,10 +5,13 @@ metadata:
   namespace: ingress-basic
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: api.sohit.com #amcart-api.centralindia.cloudapp.azure.com
+    - host: amcart-api.centralindia.cloudapp.azure.com 
       http:
         paths:
           - path: /auth
