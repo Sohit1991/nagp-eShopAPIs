@@ -5,12 +5,17 @@ metadata:
   namespace: ingress-basic
   annotations:
     # nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
+  tls:
+    - hosts:
+        - amcart-api.centralindia.cloudapp.azure.com
+      secretName: amcart-tls-secret 
   ingressClassName: nginx
   rules:
     - host: amcart-api.centralindia.cloudapp.azure.com 
