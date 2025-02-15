@@ -18,126 +18,126 @@ using Products.Models;
 public class ProductsController : ControllerBase
 {
     private readonly ProductsDbContext _context;
-    private readonly ElasticClient _client;
 
-    public ProductsController(ProductsDbContext context, ElasticClient? client)
+
+    public ProductsController(ProductsDbContext context)
     {
         _context = context;
-        _client = client;
+
     }
 
 
-    [HttpGet("search")]
-    public async Task<IActionResult> SearchAsync(string searchTerm)
-    {
-        searchTerm = searchTerm.Trim();
-        try
-        {
-            var searchResponse = await _client.SearchAsync<Product>(s => s
-            .Query(q => q
-                .Bool(b => b
-                    .Should(sh => sh
-                        .Wildcard(w => w
-                            .Field(f => f.Title)
-                            .Value($"*{searchTerm.ToLowerInvariant()}*")
-                        ),
-                        sh => sh
-                        .Wildcard(w => w
-                            .Field(f => f.Category)
-                            .Value($"*{searchTerm.ToLowerInvariant()}*")
-                        ),
-                        sh => sh
-                        .Wildcard(w => w
-                            .Field(f => f.Description)
-                            .Value($"*{searchTerm.ToLowerInvariant()}*")
-                        ),
-                        sh => sh
-                        .Wildcard(w => w
-                            .Field(f => f.Price)
-                            .Value($"*{searchTerm.ToLowerInvariant()}*")
-                        ),
-                        sh => sh
-                        .Wildcard(w => w
-                            .Field(f => f.Id)
-                            .Value($"*{searchTerm.ToLowerInvariant()}*")
-                        ),
-                        sh => sh
-                        .MatchPhrase(m => m
-                        .Field(f => f.Title) // Replace "YourField" with the field you want to search in
-                        .Query(searchTerm.ToLowerInvariant())
-                        ),
-                        sh => sh
-                        .MatchPhrase(m => m
-                        .Field(f => f.Description) // Replace "YourField" with the field you want to search in
-                        .Query(searchTerm.ToLowerInvariant())
-                        ),
-                        sh => sh
-                        .MatchPhrase(m => m
-                        .Field(f => f.Category) // Replace "YourField" with the field you want to search in
-                        .Query(searchTerm.ToLowerInvariant())
-                        )
-                    )
-                )
-            )
-        );
+    //[HttpGet("search")]
+    //public async Task<IActionResult> SearchAsync(string searchTerm)
+    //{
+    //    searchTerm = searchTerm.Trim();
+    //    try
+    //    {
+    //        var searchResponse = await _client.SearchAsync<Product>(s => s
+    //        .Query(q => q
+    //            .Bool(b => b
+    //                .Should(sh => sh
+    //                    .Wildcard(w => w
+    //                        .Field(f => f.Title)
+    //                        .Value($"*{searchTerm.ToLowerInvariant()}*")
+    //                    ),
+    //                    sh => sh
+    //                    .Wildcard(w => w
+    //                        .Field(f => f.Category)
+    //                        .Value($"*{searchTerm.ToLowerInvariant()}*")
+    //                    ),
+    //                    sh => sh
+    //                    .Wildcard(w => w
+    //                        .Field(f => f.Description)
+    //                        .Value($"*{searchTerm.ToLowerInvariant()}*")
+    //                    ),
+    //                    sh => sh
+    //                    .Wildcard(w => w
+    //                        .Field(f => f.Price)
+    //                        .Value($"*{searchTerm.ToLowerInvariant()}*")
+    //                    ),
+    //                    sh => sh
+    //                    .Wildcard(w => w
+    //                        .Field(f => f.Id)
+    //                        .Value($"*{searchTerm.ToLowerInvariant()}*")
+    //                    ),
+    //                    sh => sh
+    //                    .MatchPhrase(m => m
+    //                    .Field(f => f.Title) // Replace "YourField" with the field you want to search in
+    //                    .Query(searchTerm.ToLowerInvariant())
+    //                    ),
+    //                    sh => sh
+    //                    .MatchPhrase(m => m
+    //                    .Field(f => f.Description) // Replace "YourField" with the field you want to search in
+    //                    .Query(searchTerm.ToLowerInvariant())
+    //                    ),
+    //                    sh => sh
+    //                    .MatchPhrase(m => m
+    //                    .Field(f => f.Category) // Replace "YourField" with the field you want to search in
+    //                    .Query(searchTerm.ToLowerInvariant())
+    //                    )
+    //                )
+    //            )
+    //        )
+    //    );
 
 
-            // Check if the search was successful
-            if (searchResponse.IsValid)
-            {
-                // Process and return the search results
-                return Ok(searchResponse.Documents);
-            }
-            else
-            {
-                // Handle search failure
-                return StatusCode(500, $"Search failed. Error: {searchResponse.ServerError}");
-            }
-        }
-        catch (Exception ex)
-        {
-            // Handle other exceptions
-            return StatusCode(500, $"Error: {ex.Message}");
-        }
-    }
+    //        // Check if the search was successful
+    //        if (searchResponse.IsValid)
+    //        {
+    //            // Process and return the search results
+    //            return Ok(searchResponse.Documents);
+    //        }
+    //        else
+    //        {
+    //            // Handle search failure
+    //            return StatusCode(500, $"Search failed. Error: {searchResponse.ServerError}");
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // Handle other exceptions
+    //        return StatusCode(500, $"Error: {ex.Message}");
+    //    }
+    //}
 
-    [HttpGet("search/category")]
-    public async Task<IActionResult> SearchByCategoryAsync(string category)
-    {
-        //category = category.Trim();
-        try
-        {
-            var searchResponse = await _client.SearchAsync<Product>(s => s
-            .Query(q => q
-                .Bool(b => b
-                    .Should(
+    //[HttpGet("search/category")]
+    //public async Task<IActionResult> SearchByCategoryAsync(string category)
+    //{
+    //    //category = category.Trim();
+    //    try
+    //    {
+    //        var searchResponse = await _client.SearchAsync<Product>(s => s
+    //        .Query(q => q
+    //            .Bool(b => b
+    //                .Should(
 
-                        // Partial match using Match query
-                        m => m.Match(m => m.Field(f => f.Category).Query(category)),
-                        // Exact match using Term query
-                        t => t.Term(t => t.Field(f => f.Category).Value(category))
-                    )
-                )
-            )
-        );
+    //                    // Partial match using Match query
+    //                    m => m.Match(m => m.Field(f => f.Category).Query(category)),
+    //                    // Exact match using Term query
+    //                    t => t.Term(t => t.Field(f => f.Category).Value(category))
+    //                )
+    //            )
+    //        )
+    //    );
 
 
-            if (searchResponse.IsValid)
-            {
-                return Ok(searchResponse.Documents);
-            }
-            else
-            {
-                // Handle search failure
-                return StatusCode(500, $"Search failed. Error: {searchResponse.ServerError}");
-            }
-        }
-        catch (Exception ex)
-        {
-            // Handle other exceptions
-            return StatusCode(500, $"Error: {ex.Message}");
-        }
-    }
+    //        if (searchResponse.IsValid)
+    //        {
+    //            return Ok(searchResponse.Documents);
+    //        }
+    //        else
+    //        {
+    //            // Handle search failure
+    //            return StatusCode(500, $"Search failed. Error: {searchResponse.ServerError}");
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // Handle other exceptions
+    //        return StatusCode(500, $"Error: {ex.Message}");
+    //    }
+    //}
 
     [HttpOptions]
     public IActionResult Options()
@@ -145,6 +145,12 @@ public class ProductsController : ControllerBase
         return Ok();
     }
 
+    [HttpGet]
+    [Route("/products/test")]
+    public IActionResult Test()
+    {
+        return Ok("Success");
+    }
 
     // GET: api/Products
     [HttpGet]
@@ -158,6 +164,30 @@ public class ProductsController : ControllerBase
         }
 
         return products;
+    }
+
+    // GET: api/Products
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<Product>>> SearchProducts(string productName)
+    {
+        var products = await _context.Products.ToListAsync();
+        List<Product> listProducts = new List<Product>();
+        if (products.Any())
+        {
+            //listProducts = products.Where(a => a.Title. Contains(productName) || a.Category.Contains(productName)
+            //                   || a.Description.Contains(productName)).ToList();
+            listProducts = products.Where(a => a.Title.IndexOf(productName, StringComparison.OrdinalIgnoreCase) >= 0
+                                        || a.Category.IndexOf(productName, StringComparison.OrdinalIgnoreCase) >= 0
+                                        || a.Description.IndexOf(productName, StringComparison.OrdinalIgnoreCase) >= 0)
+                                        .ToList();
+        }
+
+        if (!listProducts.Any())
+        {
+            return NotFound();
+        }
+
+        return listProducts;
     }
 
     // GET: api/Products/5

@@ -10,8 +10,6 @@ var configuration = new ConfigurationBuilder().SetBasePath(builder.Environment.C
 
 builder.Services.AddSingleton(configuration);
 
-builder.Services.AddSingleton(configuration);
-
 var DatabaseName = configuration.GetSection("CosmosDBSettings:DatabaseName").Value;
 
 var PrimaryKey = configuration.GetSection("CosmosDBSettings:PrimaryKey").Value;
