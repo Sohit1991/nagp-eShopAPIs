@@ -88,7 +88,7 @@ namespace Auth
             }
 
             app.UseCors();
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseAuthorization();
 
