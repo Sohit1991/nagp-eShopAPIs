@@ -90,7 +90,7 @@ namespace Auth
             app.UseCors();
             //app.UseAuthentication();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
 
 
