@@ -65,9 +65,9 @@ namespace Auth
                     {
                         builder.AllowAnyOrigin()
                                .AllowAnyMethod()
-                               .AllowAnyHeader()
+                               .AllowAnyHeader();
                                //.AllowCredentials()
-                               .WithExposedHeaders("Access-Control-Allow-Origin");
+                               //.WithExposedHeaders("Access-Control-Allow-Origin");
                     });
             });
 
