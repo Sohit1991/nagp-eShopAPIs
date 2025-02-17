@@ -13,6 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     #nginx.ingress.kubernetes.io/cors-allow-origin: "http://localhost:4200/"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-expose-headers: "Access-Control-Allow-Origin"
 spec:
   tls:
     - hosts:
