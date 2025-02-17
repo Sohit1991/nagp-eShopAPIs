@@ -52,7 +52,7 @@ namespace Auth
                     ValidIssuers = new List<string>
                     {
                         "https://amcartstorageaccount.z10.web.core.windows.net",
-                        "http://localhost:4200/home"
+                        "http://localhost:4200"
                     }
 
                 };
