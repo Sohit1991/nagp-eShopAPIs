@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Auth.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
     [EnableCors]
+    [ApiController]
     public class AuthManagementController : ControllerBase
     {
         private readonly ILogger<AuthManagementController> _logger;
