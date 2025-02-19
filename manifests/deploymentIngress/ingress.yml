@@ -33,7 +33,7 @@ spec:
                 name: amcartauthapi-service
                 port:
                   number: 80
-          - path: /products1/test
+          - path: /products
             pathType: Prefix
             backend:
               service:
