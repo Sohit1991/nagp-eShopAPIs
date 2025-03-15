@@ -19,11 +19,11 @@ metadata:
 spec:
   tls:
     - hosts:
-        - amcart-api.centralindia.cloudapp.azure.com
+        - amcart-nagp-api.centralindia.cloudapp.azure.com
       secretName: amcart-tls-secret 
   ingressClassName: nginx
   rules:
-    - host: amcart-api.centralindia.cloudapp.azure.com 
+    - host: amcart-nagp-api.centralindia.cloudapp.azure.com 
       http:
         paths:
           - path: /auth
