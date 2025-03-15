@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: amcartauthapi 
-          image: amcartapireg.azurecr.io/amcartauthapi
+          image: nagpapirepo.azurecr.io/amcartauthapi
           ports:
           - containerPort: 8080
 
