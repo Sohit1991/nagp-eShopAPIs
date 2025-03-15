@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: nagpeshopapis 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nagpeshopapis
+  template:
+    metadata:
+      labels:
+        app: nagpeshopapis 
+    spec:
+      containers:
+        - name: nagpeshopapis 
+          image: nagpapirepo.azurecr.io/nagpeshopapis
+          ports:
+          - containerPort: 80
