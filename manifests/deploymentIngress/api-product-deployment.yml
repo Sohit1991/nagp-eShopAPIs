@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: amcartproductapi 
-          image: nagpapirepo.azurecr.io/amcartproductapi
+          image: amcartapiReg.azurecr.io/amcartproductapi
           ports:
           - containerPort: 8080
 ---
