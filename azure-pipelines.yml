@@ -15,7 +15,7 @@ variables:
   dockerRegistryServiceConnection: '856c65b6-1e68-4d1c-8aea-598e1f3c2bc5'
   productimageRepository: 'amcartproductapi'
   authimageRepository: 'amcartauthapi'
-  containerRegistry: 'amcartapireg.azurecr.io'
+  containerRegistry: 'amcartapiReg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
   productDockerFilePath: 'Products/Dockerfile'
   authDockerFilePath: 'Auth/Dockerfile'
