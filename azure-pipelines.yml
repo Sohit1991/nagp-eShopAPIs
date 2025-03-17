@@ -12,10 +12,10 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'fb928c1f-b777-461f-894f-b86bea5cbcd7'
+  dockerRegistryServiceConnection: '856c65b6-1e68-4d1c-8aea-598e1f3c2bc5'
   productimageRepository: 'amcartproductapi'
   authimageRepository: 'amcartauthapi'
-  containerRegistry: 'nagpapirepo.azurecr.io'
+  containerRegistry: 'amcartapireg.azurecr.io'
   #dockerfilePath: '**/Dockerfile'
   productDockerFilePath: 'Products/Dockerfile'
   authDockerFilePath: 'Auth/Dockerfile'
@@ -68,7 +68,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'Sohit1991nagpeShopAPIs-2557.ingress-basic'
+    environment: 'Sohit1991nagpeShopAPIs-7112.ingress-basic'
     strategy:
       runOnce:
         deploy:
