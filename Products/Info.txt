@@ -32,3 +32,8 @@ az aks get-credentials --resource-group cosmos-rg --name nagp-product-api --over
 
 az aks update -n nagp-product-api -g cosmos-rg --attach-acr productapi
 kubectl apply -f product-api-deployment.yaml
+
+************Git commands to Add Code to *****
+git add .  (1. Stage your changes)
+git commit -m "Your descriptive commit message"  (2. Commit your changes:)
+git push origin main (3. Push your changes
